@@ -1,0 +1,23 @@
+score = []
+feat_labels = df_jiaceng.columns[1:]
+mean_B=0
+mean_S = 0
+for j in range(X_train_std.shape[1]):
+    for label in range(1,4):
+        """3类别
+        j为第j个特征"""
+        a= np.mean((X_train_std[y_train == label,j]))
+        b = np.mean(X_train_std[:,j])
+        c=np.square(a-b)
+        mean_S=mean_S+c
+    for label in range(1,4):
+        for k in  X_train_std[y_train == label,j]:
+            aa=(np.square(k-np.mean(X_train_std[y_train == label,j],axis=0)))/(X_train_std[y_train == label].shape[0]-1)
+            mean_B=mean_B+aa
+    score.append(mean_S/mean_B)
+    print("%2d) %-*s %f" %(j+1,30,feat_labels[j],mean_S/mean_B))
+
+
+
+
+
